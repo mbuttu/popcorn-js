@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Popcorn TOC Plug-in Demo</title>
+  <script src="../../popcorn.js"></script>
+  <script src="popcorn.toc.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+      var p = Popcorn( "#video" )
+      .play()
+      .mute()
+      .toc({
+        start: 0,
+        end: 50,
+        target: "tocdiv",
+        sections: [{
+          time: "00:00",
+          title: "Introduction",
+          description: "The introduction to this video."
+        },
+        {
+          time: "00:5",
+          title: "Another Topic",
+          description: "Description of another topic."
+        },
+        {
+          time: "00:10",
+          end: 80,
+          title: "A third topic.",
+          description: "Description of the third topic."
+        }]
+      });
+    }, false);
+
+  </script>
+
+  <style>
+    .active {
+      border: 5px solid green;
+    }
+
+    .complete {
+      background-color: blue;
+    }
+
+    div#tocdiv ul {
+      list-style-type: none;
+      float: left;
+      width: 500px;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="qunit-header">Popcorn TOC Plug-in Demo</h1>
+  <div>
+    <video style="float: left" id="video"
+      controls
+      poster="../../test/poster.png">
+
+      <source id="mp4"
+        src="../../test/trailer.mp4"
+        type='video/mp4; codecs="avc1, mp4a"'>
+
+      <source id="ogv"
+        src="../../test/trailer.ogv"
+        type='video/ogg; codecs="theora, vorbis"'>
+
+      <p>Your user agent does not support the HTML5 Video element.</p>
+
+    </video>
+    <div id="tocdiv"></div>
+  </div>
+</body>
+</html>
