@@ -34,6 +34,7 @@
           remote: "",
           data: []
         },
+        tempLines = [],
         subs = [],
         i = 0,
         idx = 0,
@@ -46,6 +47,31 @@
     // Here is where the magic happens
     // Split on line breaks
     lines = data.text.split( /(?:\r\n|\r|\n)/gm );
+
+    // Each block in the SRT file is represented as 4 elements in the array.
+    // The 4th element should always be a newline.
+    //
+    // Make sure there's at least one block.
+    if ( lines.length < 3 ) {
+      return false;
+    }
+
+    // If the 4th element isn't an empty string, we are in IE8, which has a bug in
+    // its `split` implementation (empty elements are removed).
+    //
+    // Add in the empty elements where they're supposed to be.
+    if ( lines[3] !== "" ) {
+      Popcorn.forEach(lines, function(line, idx) {
+        if ( idx % 3 === 0  ) {
+          tempLines.push( "" );
+        }
+
+        tempLines.push( line );
+      });
+
+      lines = tempLines;
+    }
+
     endIdx = lastNonEmptyLine( lines ) + 1;
 
     for( i=0; i < endIdx; i++ ) {
