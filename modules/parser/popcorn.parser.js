@@ -70,7 +70,9 @@
 
           //  If no tracks to process, return immediately
           if ( !tracksDataLen ) {
-            return;
+            if ( callback ) {
+              return callback( new Error( "No tracks to process for " + filename ) );
+            }
           }
 
           //  Create tracks out of parsed object
@@ -87,7 +89,7 @@
             }
           }
           if ( callback ) {
-            callback();
+            callback( null );
           }
         }
       });
